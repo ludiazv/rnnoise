@@ -39,7 +39,7 @@ pub fn build(b: *std.Build) void {
             bool,
             "assertions",
             "Enable assertions (enabled by default in debug)",
-        ) orelse if (optimize == .Debug) true else null,
+        ) orelse if (optimize == .debug) true else null,
         .STDC_HEADERS = true,
         .SUPPORT_ATTRIBUTE_VISIBILITY_DEFAULT = true,
         .SUPPORT_FLAG_VISIBILITY = true,
