@@ -13,6 +13,12 @@ pub fn build(b: *std.Build) void {
         "embed the little model (default false)",
     ) orelse false;
 
+    const dynlib = b.option(
+        bool,
+        "dynlib",
+        "build the dynamic library (default true)",
+    ) orelse true;
+
     const x86_rtcd = (b.option(bool, "rtcd", "Enable x86 rtcd") orelse false) and
         target.result.cpu.arch.isX86();
     const sse4_1 = !x86_rtcd and (target.result.cpu.arch.isX86() and
@@ -163,14 +169,16 @@ pub fn build(b: *std.Build) void {
     lib.installHeadersDirectory(upstream.path("include"), "", .{});
     b.installArtifact(lib);
 
-    const dynlib = b.addLibrary(.{
-        .name = "rnnoise",
-        .linkage = .dynamic,
-        .root_module = mod,
-    });
+    if (dynlib) {
+        const dyn_lib = b.addLibrary(.{
+            .name = "rnnoise",
+            .linkage = .dynamic,
+            .root_module = mod,
+        });
 
-    dynlib.installHeadersDirectory(upstream.path("include"), "", .{});
-    b.installArtifact(dynlib);
+        dyn_lib.installHeadersDirectory(upstream.path("include"), "", .{});
+        b.installArtifact(dyn_lib);
+    }
 }
 
 const cflags = &[_][]const u8{"-DHAVE_CONFIG_H"};

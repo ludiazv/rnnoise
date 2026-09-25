@@ -2,7 +2,8 @@
 
 ## Build script
 
-Run `zig build` to create static and dynamic libraries.
+Run `zig build` to create the static library (and the dynamic library by
+default; disable it with `-Ddynlib=false`).
 See `zig build -h` for all custom options.
 ```
 Project-Specific Options:
@@ -17,6 +18,7 @@ Project-Specific Options:
                                    ReleaseFast
                                    ReleaseSmall
   -Dlittle=[bool]              embed the little model (default false)
+  -Ddynlib=[bool]              build the dynamic library (default true)
   -Drtcd=[bool]                Enable x86 rtcd
   -Ddisable-debug-float=[bool] (default true)
   -Dassertions=[bool]          Enable assertions (enabled by default in debug)
