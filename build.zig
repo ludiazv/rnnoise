@@ -173,7 +173,7 @@ pub fn build(b: *std.Build) void {
     b.installArtifact(dynlib);
 }
 
-const cflags = &[_][]const u8{};
+const cflags = &[_][]const u8{"-DHAVE_CONFIG_H"};
 
 const rnnoise_sources = &[_][]const u8{
     "denoise.c",
